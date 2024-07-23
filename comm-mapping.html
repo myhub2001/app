@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>table</title>
+<style>
+
+.form-style-9{
+	max-width: 1450px;
+	background: #FAFAFA;
+	padding: 30px;
+	margin: 50px auto;
+	box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	border: 6px solid #305A72;
+  
+	
+}
+
+input[type=text] {
+  width: 70px;
+  padding: 2px 5px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 2px solid ;
+
+}
+ .myclass{
+    display:inline-block;
+    width: 70px;
+    height: 33px;
+	background-color: #edf0f0 ;
+	border-radius: 15px;
+	cursor:pointer;
+}
+
+</style>
+  
+</head>
+<body >
+ <center>
+<button  class='myclass' onclick="location.href='index.html';">Main Editor</button>
+ </center>
+<div id="myform" class="form-style-9">
+ <table>
+  <tr align="left">
+   <th><h4>Modbus Settings</h4></th>
+  </tr>
+  <tr>
+    <td>Holding registers</td>
+    <td><input type="text" id="hreg1"></td>
+    <td><input type="text" id="hreg2"></td>
+  </tr>
+  <tr>
+    <td>Coils</td>
+    <td><input type="text" id="coil1"></td>
+    <td><input type="text" id="coil2"></td>
+  </tr>
+  <tr>
+    <th align="left"> <h4>Fill In Tags </h4></th>
+  </tr>
+  <tr>
+    <td>Tag Name</td>
+    <td><input type="text" id="tag"></td>
+  </tr>
+  <tr>
+    <td>Data Type</td>
+    <td><input type="text" id="tagtype"></td>
+  </tr>
+  <tr>
+    <td>Commuication Type</td>
+    <td><input type="text" id="comm"></td>
+  </tr>
+  <tr>
+    <td>Tag Direction</td>
+    <td><input type="text" id="dir"></td>
+  </tr>
+  <tr>
+    <td>Addrress</td>
+    <td><input type="text" id="addr"></td>
+  </tr>
+  <tr>
+    <td>Script</td>
+    <td><textarea id="tagscript"  rows="4" cols="10" style="resize: none;"> type script here</textarea></td>
+  </tr>
+   <tr>
+    <th align="left"> <h4>Alarms </h4></th>
+  </tr>
+  <tr>
+    <td>HH</td>
+    <td><input type="text" id="hihi"></td>
+	<td>&nbsp;&nbsp;&nbsp; Message &nbsp;&nbsp;&nbsp;<input type="text" id="hhmsg"></td>
+	<td>&nbsp;&nbsp;&nbsp; Color &nbsp;&nbsp;&nbsp;<input type="color" id="hhclr"></td>
+  </tr>
+   <tr>
+	<td>HI</td>
+    <td><input type="text" id="hi"></td>
+	<td>&nbsp;&nbsp;&nbsp; Message &nbsp;&nbsp;&nbsp;<input type="text" id="himsg"></td>
+	<td>&nbsp;&nbsp;&nbsp; Color &nbsp;&nbsp;&nbsp;<input type="color" id="hiclr"></td>
+  </tr>
+  <tr>
+	<td>LO</td>
+    <td><input type="text" id="lo"></td>
+	<td>&nbsp;&nbsp;&nbsp; Message &nbsp;&nbsp;&nbsp;<input type="text" id="lomsg"></td>
+	<td>&nbsp;&nbsp;&nbsp; Color &nbsp;&nbsp;&nbsp;<input type="color" id="loclr"></td>
+  </tr>
+  <tr>
+	<td>LL</td>
+    <td><input type="text" id="ll"></td>
+	<td>&nbsp;&nbsp;&nbsp; Message &nbsp;&nbsp;&nbsp;<input type="text" id="llmsg"></td>
+	<td>&nbsp;&nbsp;&nbsp; Color &nbsp;&nbsp;&nbsp;<input type="color" id="llclr"></td>
+  </tr>
+   
+  <tr style="height:60px">
+    <td>To Tags Record </td>
+	<td><input type="button" class='myclass' id="add1" onclick="addTableRow()"></td>
+ 	<td>To Modbus settings</td>
+	<td><input type="button" class='myclass' id="add2" onclick="addTableRow2()"></td>
+	</tr>
+	<tr style="height:60px">
+	<td>Save Tags</td>
+	<td><input type="button" class='myclass'id="save1" onclick="download(jsonData, 'data.json', 'text/plain')"></td>
+	<td>Save Settings</td>
+	<td><input type="button" class='myclass'id="save2" onclick="download(jsonData2, 'data2.json', 'text/plain')"></td>
+  </tr>
+</table> 
+</div>
+
+<div  class="form-style-9">
+<button  class='myclass' onclick="addRowHandlers()">DEL</button>
+ <center>
+<h4>Modbus Settings</b></h4>
+  <table id="MBData" border="1" cellpadding="2">
+   <tr>
+    <td><b>hreg_start</b></td>
+	<td><b>hreg_end</b></td>
+    <td><b>coil_start</b></td>
+   <td><b>coil_end</b></td>
+	
+    
+   </tr>
+  </table>
+ </center>
+<button  class='myclass' onclick="addRowHandlers2()">DEL</button>
+ <center>
+<h4>Tags Record</b></h4>
+  <table id="tableData" border="1" cellpadding="2">
+   <tr>
+    <td><b>Tagname</b></td>
+	<td><b>Tagtype</b></td>
+    <td><b>Commtype</b></td>
+    <td><b>Tagdir</b></td>
+	<td><b>Addr</b></td>
+	<td><b>HH</b></td>
+	<td><b>HHMsg</b></td>
+	<td><b>HHClr</b></td>
+	<td><b>HI</b></td>
+	<td><b>HIMsg</b></td>
+	<td><b>HIClr</b></td>
+	<td><b>LO</b></td>
+	<td><b>LOMsg</b></td>
+	<td><b>LOClr</b></td>
+	<td><b>LL</b></td>
+	<td><b>LLMsg</b></td>
+	<td><b>LLClr</b></td>
+	<td><b>Tagscript</b></td>
+    
+   </tr>
+  </table>
+ </center>
+</div>
+<script>
+ var myTableDiv = document.getElementById("tableData");
+
+ 
+  var jsonData;
+  var jsonData2;
+function addTableRow() {
+ var tagname = document.getElementById("tag");
+ var tagtype = document.getElementById("tagtype");
+ var commtype = document.getElementById("comm");
+ var tagdir = document.getElementById("dir");
+ var tagadd = document.getElementById("addr");
+var taghh = document.getElementById("hihi");
+var taghhmsg = document.getElementById("hhmsg");
+var taghi = document.getElementById("hi");
+var taghimsg = document.getElementById("himsg");
+var taglo = document.getElementById("lo");
+var taglomsg = document.getElementById("lomsg");
+var tagll = document.getElementById("ll");
+var tagllmsg = document.getElementById("llmsg");
+var taghhclr = document.getElementById("hhclr");
+var taghiclr = document.getElementById("hiclr");
+var tagloclr = document.getElementById("loclr");
+var tagllclr = document.getElementById("llclr");
+var tagscript = document.getElementById("tagscript");
+
+ var table = document.getElementById("tableData");
+ var rowCount = table.rows.length;
+ var row = table.insertRow(rowCount);
+ row.insertCell(0).innerHTML= tagname.value;
+ row.insertCell(1).innerHTML= tagtype.value;
+ row.insertCell(2).innerHTML= commtype.value;
+ row.insertCell(3).innerHTML= tagdir.value;
+ row.insertCell(4).innerHTML= tagadd.value;
+ row.insertCell(5).innerHTML= taghh.value;
+ row.insertCell(6).innerHTML= taghhmsg.value;
+  row.insertCell(7).innerHTML= taghhclr.value;
+ row.insertCell(8).innerHTML= taghi.value;
+ row.insertCell(9).innerHTML= taghimsg.value;
+ row.insertCell(10).innerHTML= taghiclr.value;
+ row.insertCell(11).innerHTML= taglo.value;
+ row.insertCell(12).innerHTML= taglomsg.value;
+ row.insertCell(13).innerHTML= tagloclr.value;
+ row.insertCell(14).innerHTML= tagll.value;
+ row.insertCell(15).innerHTML= tagllmsg.value;
+ row.insertCell(16).innerHTML= tagllclr.value;
+ row.insertCell(17).innerHTML= tagscript.value;
+ 
+/*
+ var mbdiv = document.getElementById("MBData");
+ var rowCount = mbdiv.rows.length;
+ var row2 = mbdiv.insertRow(rowCount);
+var reg1 = document.getElementById("hreg1");
+ var reg2 = document.getElementById("hreg2");
+ var coil1 = document.getElementById("coil1");
+ var coil2 = document.getElementById("coil2");
+ row2.insertCell(0).innerHTML= reg1.value;
+ row2.insertCell(1).innerHTML= reg2.value;
+ row2.insertCell(2).innerHTML= coil1.value;
+ row2.insertCell(3).innerHTML= coil2.value;
+*/
+console.log(JSON.stringify(tableToJson(myTableDiv)));
+ jsonData = JSON.stringify(tableToJson(myTableDiv));
+}
+
+function addTableRow2() {
+
+
+ var mbdiv = document.getElementById("MBData");
+ var rowCount = mbdiv.rows.length;
+ var row2 = mbdiv.insertRow(rowCount);
+var reg1 = document.getElementById("hreg1");
+ var reg2 = document.getElementById("hreg2");
+ var coil1 = document.getElementById("coil1");
+ var coil2 = document.getElementById("coil2");
+ row2.insertCell(0).innerHTML= reg1.value;
+ row2.insertCell(1).innerHTML= reg2.value;
+ row2.insertCell(2).innerHTML= coil1.value;
+ row2.insertCell(3).innerHTML= coil2.value;
+
+console.log(JSON.stringify(tableToJson(MBData)));
+jsonData2 = JSON.stringify(tableToJson(MBData));
+}
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+	
+}
+
+
+//download(jsonData, 'json.txt', 'text/plain');
+function tableToJson(table) {
+    var data = [];
+
+    // first row needs to be headers
+    var headers = [];
+    for (var i=0; i<table.rows[0].cells.length; i++) {
+       // headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+	   headers[i] = table.rows[0].cells[i].innerHTML.replace("<b>",'').replace("</b>",'');
+    }
+
+    // go through cells
+    for (var i=1; i<table.rows.length; i++) {
+
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j=0; j<tableRow.cells.length; j++) {
+
+         rowData[ headers[j] ] = tableRow.cells[j].innerHTML.replace('&gt;','>').replace('&lt;','<').replace('&amp;','&').replace(/\n/gi, " ");
+
+        }
+        
+        data.push(rowData);
+    }       
+    
+    return data;
+	
+}
+
+
+function addRowHandlers() {
+
+var table = document.getElementById("MBData");
+    var rows = table.getElementsByTagName("tr");
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        //var currentRow = table.rows[i];
+       
+         row.addEventListener("click", myFunction);
+
+function myFunction() {
+  
+        alert(this.rowIndex);
+		this.remove()
+		
+		
+}  
+
+ table.addEventListener("dblclick", remfunction);     
+
+function remfunction() {
+ for (var i = 1, row; row = table.rows[i]; i++) {
+//console.log(row.rowIndex);
+row.removeEventListener("click", myFunction);
+//console.log(JSON.stringify(tableToJson(MBData)));
+jsonData2 = JSON.stringify(tableToJson(MBData));
+
+ }       
+}  
+		
+    }
+}
+
+function addRowHandlers2() {
+
+var table = document.getElementById("tableData");
+    var rows = table.getElementsByTagName("tr");
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        //var currentRow = table.rows[i];
+       
+         row.addEventListener("click", myFunction);
+
+function myFunction() {
+  
+        alert(this.rowIndex);
+		this.remove()
+		
+		
+}  
+
+ table.addEventListener("dblclick", remfunction);     
+
+function remfunction() {
+ for (var i = 1, row; row = table.rows[i]; i++) {
+//console.log(row.rowIndex);
+row.removeEventListener("click", myFunction);
+//console.log(JSON.stringify(tableToJson(tableData)));
+jsonData = JSON.stringify(tableToJson(tableData));
+
+ }       
+}  
+		
+    }
+}
+</script>
+</body>
+</html>

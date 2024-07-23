@@ -1,0 +1,19 @@
+{
+  "name": "electronjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^21.2.3",
+    "electron-builder": "^23.6.0",
+    "jquery": "^3.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

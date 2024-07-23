@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Scada_Editor_OMAR</title>
+  <link rel="stylesheet" href="./style.css">
+ <link rel="stylesheet" type="text/css" href="./styles.css">
+ 
+   
+</head>
+<body>
+<div class="btn-group"  style="width:100%">
+
+  <button id="copy" onclick="Copy()"  > <img src="images/copy.png" /> </button>
+  <button id="paste" onclick="Paste()"><img src="images/paste.png"/> </button>
+  <button id="add" onclick="addText()"><img src="images/text.png" /> </button>
+  <button id="addrec" onclick="addrec()"><img src="images/rect.png" /> </button>
+  <button id="addcircle" onclick="addcircle()"><img src="images/circle.png" /> </button>
+  <button id="addline" onclick="addline()"><img src="images/line.png" /> </button>
+  <button id="group" onclick="Group()"><img src="images/group.png" /> </button>
+   <button id="ungroup" onclick="Ungroup()"><img src="images/ungroup.png" /> </button>
+   <button id="undo" onclick="undo()"><img src="images/undo.png" /> </button>
+   <button id="redo" onclick="redo()"><img src="images/redo.png" /> </button>
+   <button id="tofront" ><img src="images/front.png" /> </button>
+   <button id="toback"><img src="images/back.png" /> </button>
+   <button id="poly" onclick="poly()"><img src="images/polygon.png" /> </button>
+	<button onclick="exportToSvg()"  style="font-size : 8px;" ><img src="images/save.png"  /><br/>JSON</button>
+  <button onclick="exportTopng()" style="font-size : 8px;" ><img src="images/save.png" /><br/>PNG</button>
+  <button onclick="tosvg()" style="font-size : 8px;" ><img src="images/save.png" /><br/>SVG</button>
+  <button onclick="location.href='#popup2';" style="font-size : 8px;"  ><img src="images/import.png" /><br/>Import</button>
+  <button onclick="location.href='comm-mapping.html';" style="font-size : 8px;" > <img src="images/iteration.png" /> <br/>Mapping</button>
+ 
+</div>
+</br ></br >
+<div class="navbar">
+
+<label for="name">TagName</label>
+<input type="text"  id="name" name="name" >
+<label for="tagscript">Script</label>
+<input type="text"  id="tagscript" name="tagscript" >
+<label for="scriptag">Scriptag</label>
+<input type="text"  id="scriptag" name="scriptag" >
+<label for="on">OnColor</label>
+<input type="color"  id="on" name="on" >
+<label for="off">OffColor</label>
+<input type="color"  id="off" name="off" >
+<label for="dir">TagDir</label>
+<input type="text"  id="dir" name="dir" >
+<label for="bckclr">Background Color</label>
+<input type="color" value="" id="bckclr" name="bckclr" size="10" >
+<button id="toggle-dark-mode"  >Dark Mode</button>
+<button id="reset-to-system" >System Theme</button>
+
+</div>  
+</br ></br >
+<div>
+<p>Current theme source: <strong id="theme-source">System</strong></p>
+    
+	
+</div>
+
+
+
+ </br >
+<div >
+  <button onclick="exportToSvg()" class='myclass' >ToJson</button>
+  <button id="copy" onclick="Copy()" class='myclass'>COPY</button>
+  <button id="paste" onclick="Paste()" class='myclass'>PATSE</button>
+  <button id="add" onclick="addText()" class='myclass'>TEXT</button>
+  <button id="addrec" onclick="addrec()" class='myclass'>RECT</button>
+  <button id="addcircle" onclick="addcircle()" class='myclass'>CIRCLE</button>
+  <button id="addline" onclick="addline()" class='myclass'>LINE</button>
+  <button id="group" onclick="Group()" class='myclass'>GROUP</button>
+   <button id="ungroup" onclick="Ungroup()" class='myclass'>UGROUP</button>
+   <button id="tofront" onclick="tofront()" class='myclass' >ToFRONT</button>
+   <button id="toback" onclick="toback()" class='myclass'>ToBACK </button>
+   <button id="undo" onclick="undo()" class='myclass'>UNDO </button>
+   <button id="redo" onclick="redo()" class='myclass'>REDO </button>
+   <button id="poly" onclick="poly()" class='myclass'>POLY </button>
+<button id="addrec2" onclick="addrec2()" class='myclass'>CustRec</button>
+<button id="add2" onclick="addText2()" class='myclass'>CustText</button>
+ <button onclick="location.href='#popup1';" class='myclass' > Design</button>
+
+
+  
+  </div>
+  
+  </br >
+<div class="container-app">
+ 
+   
+  
+ 
+  <canvas id="c" width="1040" height="650" style="border:3px solid  #d3b195 "  ></canvas>
+  
+  <div class="item-selected">
+    <div id='i-text' class="item-panel">
+      <div id="general-controls">
+        <div id="text-controls-additional">
+          <div id="color-select" onclick="clickColor()" class="color-select">
+            <div id="color-selected" class="color-item"></div>
+            <span class="caption">Color</span>
+          </div>
+          <input type='checkbox' name='fonttype' id="text-cmd-bold">
+          <label class="text-control" for="text-cmd-bold">
+            <b>B</b>
+          </label>
+          <input type='checkbox' name='fonttype' id="text-cmd-italic">
+          <label class="text-control" for="text-cmd-italic">
+            <i>I</i>
+          </label>
+          <input type='checkbox' name='fonttype' id="text-cmd-underline">
+          <label class="text-control" for="text-cmd-underline">
+            <span style="text-decoration:underline">U</span>
+          </label>
+        </div>
+        <label for="font-family" style="display:inline-block">Font family:</label>
+        <select id="font-family">
+          <option value="arial">Arial</option>
+          <option value="helvetica" selected>Helvetica</option>
+          <option value="comic sans ms">Comic Sans MS</option>
+        </select>
+      </div>
+      <div id="color-controls">
+        <div class="header-control">
+          <span onclick="back()"> < </span> <p>Choose a coulor</p>
+        </div>  
+        <div id="color-list">
+          
+        </div>
+      </div>
+	  <!--  the below table used to  show proprties of Itext-->
+	  <table id="prop2" style="border: 1px solid black; border-collapse: collapse;" cellpadding="2">
+        <tr>
+        <td style="border: 1px solid black; border-collapse: collapse;width: 80px;">Type</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;width: 80px;">type</td>
+        </tr>
+		
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Tag</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;">tag</td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Direction</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;">dir</td>
+        </tr>
+	
+        </table>
+    </div>
+    <div id='image' class="item-panel">
+        <label for="text-color">Fill:</label>
+        <input type="color" value="" id="fill-color" size="10">
+		<label for="border-color">Border:</label>
+        <input type="color" value="" id="fill2-color" size="10">
+		<label for="border-Size"> </br >Thickness:</label>
+        <input type="number" value="2" id="border-size" size="10">
+		<!--  the below table used to  show proprties of objects (rect , circle , line and poly-->
+		<table id="prop" style="border: 1px solid black; border-collapse: collapse;" cellpadding="2">
+        <tr>
+        <td style="border: 1px solid black; border-collapse: collapse;width: 80px;">Type</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;width: 80px;">type</td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Fill</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;"></td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Tag</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;">tag</td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Direction</td>
+	    <td style="border: 1px solid black; border-collapse: collapse;">dir</td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">On Color </td>
+	    <td style="border: 1px solid black; border-collapse: collapse;"></td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Off Color </td>
+	    <td style="border: 1px solid black; border-collapse: collapse;"></td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Script </td>
+	    <td style="border: 1px solid black; border-collapse: collapse;"></td>
+        </tr>
+		<tr>
+        <td style="border: 1px solid black; border-collapse: collapse;">Scriptag </td>
+	    <td style="border: 1px solid black; border-collapse: collapse;"></td>
+        </tr>
+        </table>
+		
+    </div>
+	<!-- i used this div eralier to change line stroke color but i used above div id='image'
+	<div id='image2' class="item-panel">
+        <label for="text-color">Stroke:</label>
+        <input type="color" value="" id="fill3-color" size="10">
+    </div>
+	-->
+  </div>
+</div>  
+ </br >
+  </br >
+
+<div id="popup1" class="overlay" href="#">
+	<div class="popup">
+    <div class="header-container">
+      <h2>Selectionner un design</h2>
+      <a class="close" href="#">&times;</a>
+    </div>
+    <div class="container-modal">
+      <div class="category-list">
+        <div class="category-item" onclick="changeImgSrc(imgSrc)">
+          <span>Images</span>
+        </div>
+        <div class="category-item" onclick="changeImgSrc(illuSrc)">
+          <span>Illustrations</span>
+        </div>
+        <div class="category-item" onclick="changeImgSrc(girlSrc)">
+          <span>Girly</span>
+        </div>
+      </div>
+      <div class="content">
+        <ul class="assets" id="list">
+        </ul>
+      </div>
+    </div>
+	</div>
+</div>
+<div id="popup2" class="overlay" href="#">
+	<div class="popup">
+    <div class="header-container">
+      <h2>Import a design</h2>
+      <a class="close" href="#">&times;</a>
+    </div>
+    <div class="container-modal">
+      <div class="import-zone">
+        <div class="accept">
+                 <p class="warning">
+Do you want to import <a href="">ici</a></p>
+        <div class="toggle-contain">
+          <div id="toggle">
+            <div class="inner-container">
+              <div class="toggle">
+                <p>Yes</p>
+              </div>
+              <div class="toggle">
+                <p>No</p>
+              </div>
+            </div>
+            <div class="inner-container" id='toggle-container'>
+              <div class="toggle">
+                <p>Yes</p>
+              </div>
+              <div class="toggle">
+                <p>No</p>
+              </div>
+            </div>
+          </div>
+        </div> 
+        </div>
+
+        <label id="largeFile" for="file">
+          <input type="file" onchange="loadFile(event)" id="file" />
+          Import a file
+        </label>
+
+      </div>
+      <div class="content-imported">
+        <img id="output"/>
+      </div>
+    </div>
+    <div class="container-button">
+      <button onclick="importFile()">import</button>
+      <button onclick="importSVG()">svg</button>
+      <button onclick="importJson()">Json</button>
+    </div>
+	</div>
+</div>
+
+<!-- partial -->
+ <script src='jquery.min.js'></script>
+   <script src="fabric.min.js"></script>
+  <script  src="script.js"></script>
+  <script src="renderer.js"></script>
+
+ 
+ 
+</body>
+</html>
